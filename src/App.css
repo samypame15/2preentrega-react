@@ -1,0 +1,83 @@
+.custom-navbar {
+  box-shadow: 0 4px 6px rgba(91, 8, 8, 0.1);
+  background-color: #f1d8ea;
+}
+
+.custom-navbar .navbar-brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.custom-navbar .nav-link {
+  color: #1a1919 !important;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.custom-navbar .nav-link:hover {
+  color: #5b0a42 !important;
+}
+
+.custom-navbar .nav-dropdown {
+  background-color: #42157e;
+  color: #b84a93;
+}
+
+.FaCartArrowDown {
+  font-size: 5rem;
+  color: brown;
+}
+
+.banner {
+  background-color: #f8f9fa;
+  padding: 50px 0;
+}
+
+.banner-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.banner-text h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #343a40;
+  margin-bottom: 20px;
+}
+
+.banner-text p {
+  font-size: 1.2rem;
+  color: #6c757d;
+  margin-bottom: 20px;
+}
+
+.banner-bnt {
+  font-size: 25px;
+  padding: 10px 20px;
+  color: #e36ba3;
+  background-color: #bc509b;
+  border-radius: 1rem;
+}
+
+.img-fluid {
+  width: 80%;
+  height: auto;
+  border-radius: 10px;
+  max-width: 600px;
+  height: auto;
+}
+
+.footer {
+  background-color:#f1d8ea;
+}
+
+.footer .social-links a {
+  font-size: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+.footer .social-links a:hover {
+  color: #5a0331;
+}
