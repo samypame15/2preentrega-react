@@ -1,52 +1,40 @@
 import React, { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
 import ItemCount from "./ItemCount";
 
 const ItemListContainer = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const handleAddToCart = (item, quantity) => {
-    alert(`Has añadido ${quantity} unidades de ${item.name} al carrito.`);
-  };
+  const [error, setError] = useState(null);
+  const { categoryId } = useParams();  
 
   useEffect(() => {
+    setLoading(true);
     setTimeout(() => {
-      const mockItems = [
-        { id: 1, name: "Torta", 
-          stock: 10, 
-          price: 180000,
-           image: "/torta.jpg" },
-           
-        {
-          id: 2,
-          name: "Postre",
-          stock: 11,
-          price: 150000,
-          image: "/postre.jpg",
-        },
-        {
-          id: 3,
-          name: "Anchetas",
-          stock: 5,
-          price: 200000,
-          image: "/anchetas.jpg",
-        },
-        {
-          id: 4,
-          name: "Desayunos",
-          stock: 4,
-          price: 190000,
-          image: "/desayuno.jpg",
-        },
-      ];
-      setItems(mockItems);
-      setLoading(false);
+      try {
+        const mockItems = [
+          { id: 1, name: "Torta", category: "pastelería", stock: 10, price: 180000, image: "/torta.jpg" },
+          { id: 2, name: "Postre", category: "dulces", stock: 11, price: 150000, image: "/postre.jpg" },
+          { id: 3, name: "Anchetas", category: "anchetas", stock: 5, price: 200000, image: "/anchetas.jpg" },
+          { id: 4, name: "Desayunos", category: "regalos", stock: 4, price: 190000, image: "/desayuno.jpg" },
+        ];
+        const filteredItems = categoryId
+          ? mockItems.filter((item) => item.category === categoryId)
+          : mockItems;
+
+        setItems(filteredItems);
+      } catch (err) {
+        setError("Error al cargar los productos");
+      } finally {
+        setLoading(false);
+      }
     }, 2000);
-  }, []);
+  }, [categoryId]);  
 
   return (
     <div>
       <h1 className="text-center">Lista de Productos</h1>
+      {error && <p className="text-center text-danger">{error}</p>}
       {loading ? (
         <p className="text-center">Cargando...</p>
       ) : (
@@ -67,8 +55,13 @@ const ItemListContainer = () => {
                   </p>
                   <ItemCount
                     stock={item.stock}
-                    onAdd={(quantity) => handleAddToCart(item, quantity)}
+                    onAdd={(quantity) => alert(`${quantity} de ${item.name} añadidos al carrito`)}
                   />
+                  <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
+                    <Link to={`/item/${item.id}`} className="btn btn-danger mt-2">
+                      Ver Detalle
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
@@ -80,3 +73,4 @@ const ItemListContainer = () => {
 };
 
 export default ItemListContainer;
+

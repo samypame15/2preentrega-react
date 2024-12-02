@@ -17,7 +17,7 @@ const ItemCount = ({ stock = 10, initial = 1, onAdd }) => {
 
   const handleAdd = () => {
     if (onAdd) {
-      onAdd(count);
+      onAdd(count);  
     }
   };
 
@@ -54,4 +54,5 @@ const ItemCount = ({ stock = 10, initial = 1, onAdd }) => {
 };
 
 export default ItemCount;
+
 

@@ -3,7 +3,7 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 
 function Banner() {
   return (
-    <div className="banner">
+    <div className="banner" style={{ backgroundColor: "#fff3f5", padding: "50px 0" }}>
       <Container fluid>
         <Row className="align-items-center">
           <Col md={6} className="banner-text">
@@ -13,14 +13,25 @@ function Banner() {
               cada ocasión. Desde pasteles personalizados hasta deliciosas
               galletas, nuestros productos te cautivarán con su sabor y calidad.
             </p>
-            {/* <Button className="banner-btn">Ordenar ahora</Button> */}
-            <Button style={{ backgroundColor: '#f0b1dc', borderColor: '#ff69b4', color: 'white', transition: "all 0.3s ease", }}>
-            Ordenar ahora
-             </Button>
-
+            <Button
+              style={{
+                backgroundColor: '#f0b1dc',
+                borderColor: '#ff69b4',
+                color: 'white',
+                transition: "all 0.3s ease",
+              }}
+              onMouseOver={(e) => e.target.style.backgroundColor = "#ff69b4"}
+              onMouseOut={(e) => e.target.style.backgroundColor = "#f0b1dc"}
+            >
+              Ordenar ahora
+            </Button>
           </Col>
           <Col md={6} className="banner-image">
-            <img src="./banner.png" alt="banner" className="img-fluid" />
+            <img 
+              src="./banner.png" 
+              alt="Banner promocional de Emicake, mostrando productos de pastelería" 
+              className="img-fluid" 
+            />
           </Col>
         </Row>
       </Container>
@@ -29,3 +40,4 @@ function Banner() {
 }
 
 export default Banner;
+
