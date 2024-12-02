@@ -16,7 +16,7 @@ const ItemListContainer = () => {
           { id: 1, name: "Torta", category: "pastelería", stock: 10, price: 180000, image: "/torta.jpg" },
           { id: 2, name: "Postre", category: "dulces", stock: 11, price: 150000, image: "/postre.jpg" },
           { id: 3, name: "Anchetas", category: "anchetas", stock: 5, price: 200000, image: "/anchetas.jpg" },
-          { id: 4, name: "Desayunos", category: "regalos", stock: 4, price: 190000, image: "/desayuno.jpg" },
+          { id: 4, name: "Desayunos", category: "desayunos", stock: 4, price: 190000, image: "/desayuno.jpg" },
         ];
         const filteredItems = categoryId
           ? mockItems.filter((item) => item.category === categoryId)
