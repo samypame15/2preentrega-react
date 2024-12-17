@@ -1,50 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import ItemCount from "./ItemCount";
+import { useParams, Link } from "react-router-dom";
+import mockItems from "./mockItems"; 
+import ItemQuantitySelector from "./ItemQuantitySelector";
+import Description from "./Description";
+import AddItemButton from "./AddItemButton";
+import Checkout from "./Checkout";
 
 const ItemDetail = () => {
   const { itemId } = useParams();
   const [item, setItem] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true); 
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
 
   useEffect(() => {
-    const mockItems = [
-      {
-        id: 1,
-        name: "Torta",
-        stock: 10,
-        price: 180000,
-        image: "/torta.jpg",
-        description:
-          "Creamos tortas a medida para cualquier ocasión, con diseños únicos y sabores deliciosos",
-      },
-      {
-        id: 2,
-        name: "Postre",
-        stock: 11,
-        price: 150000,
-        image: "/postre.jpg",
-        description:
-          "Desde tartaletas hasta trufas, nuestros postres artesanales son una delicia para el paladar",
-      },
-      {
-        id: 3,
-        name: "Anchetas",
-        stock: 5,
-        price: 200000,
-        image: "/anchetas.jpg",
-        description: "Anchetas para toda ocasión, cumpleaños, románticas.",
-      },
-      {
-        id: 4,
-        name: "Desayunos",
-        stock: 4,
-        price: 190000,
-        image: "/desayuno.jpg",
-        description: "Desayuno sorpresa",
-      },
-    ];
-
     const foundItem = mockItems.find((item) => item.id === parseInt(itemId));
 
     if (foundItem) {
@@ -52,38 +21,73 @@ const ItemDetail = () => {
     } else {
       setError("Producto no encontrado");
     }
+    setLoading(false); 
   }, [itemId]);
 
-  const handleAddToCart = (quantity) => {
-    alert(`Añadido al carrito: ${quantity} ${item.name}(s)`);
+  const handleAddToCart = () => {
+    if (selectedQuantity > item.stock) {
+      alert("La cantidad seleccionada excede el stock disponible.");
+    } else {
+      alert(`Añadido al carrito: ${selectedQuantity} ${item.name}(s)`);
+    }
   };
 
-  if (error) {
-    return <p>{error}</p>;
-  }
 
-  return item ? (
-    <div className="container mt-5">
-      <h1>{item.name}</h1>
-      <img
-        src={item.image}
-        alt={item.name}
-        style={{
-          width: "300px",
-          height: "auto",
-          justifyContent: "center",
-          display: "flex",
-          alignItems: "center",
-        }}
-      />
-      <p>Precio: ${item.price.toLocaleString()}</p>
-      <p>{item.description}</p>
-
-      <ItemCount stock={item.stock} initial={1} onAdd={handleAddToCart} />
+  const renderLoading = () => (
+    <div className="container mt-5 text-center">
+      <p>Cargando detalle del producto...</p>
+      <div className="spinner-border text-primary" role="status"></div>
     </div>
-  ) : (
-    <p>Cargando detalle...</p>
   );
+
+  const renderError = () => (
+    <div className="container mt-5 text-center">
+      <h2>{error}</h2>
+      <Link to="/" className="btn btn-primary mt-3">
+        Volver a la página principal
+      </Link>
+    </div>
+  );
+
+
+  const renderProductDetails = () => (
+    <div className="container mt-5">
+      <div className="text-center">
+        <h1>{item.name}</h1>
+        <img
+          src={item.image}
+          alt={item.name}
+          style={{
+            width: "300px",
+            height: "auto",
+            marginBottom: "20px",
+            borderRadius: "10px",
+            boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
+          }}
+        />
+        <p>
+          <strong>Precio:</strong> ${item.price.toLocaleString()}
+        </p>
+        <p>
+          <strong>Disponibilidad:</strong> {item.stock > 0 ? `${item.stock} en stock` : "Agotado"}
+        </p>
+      </div>
+
+      <Description text={item.description} />
+      <ItemQuantitySelector
+        stock={item.stock}
+        initial={1}
+        onQuantityChange={setSelectedQuantity}
+      />
+      <AddItemButton onAdd={handleAddToCart} disabled={item.stock <= 0} />
+      <Checkout item={item} quantity={selectedQuantity} />
+    </div>
+  );
+
+  if (loading) return renderLoading();
+  if (error) return renderError();
+  return item ? renderProductDetails() : null;
 };
 
 export default ItemDetail;
+

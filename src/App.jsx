@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -6,11 +6,11 @@ import NavbarReact from "./Componentes/NavbarReact";
 import Banner from "./Componentes/Banner";
 import ItemListContainer from "./Componentes/ItemListContainer";
 import Footer from "./Componentes/Footer";
-import ItemDetail from "./Componentes/ItemDetail"; 
+import ItemDetail from "./Componentes/ItemDetail";
+import Checkout from "./Componentes/Checkout";
+import PaymentPage from "./Componentes/PaymentPage";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <Router>
       <div>
@@ -29,6 +29,8 @@ function App() {
           <Route path="/" element={<ItemListContainer />} />
           <Route path="/category/:categoryId" element={<ItemListContainer />} />
           <Route path="/item/:itemId" element={<ItemDetail />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/pago" element={<PaymentPage />} />
         </Routes>
         <Footer />
       </div>
